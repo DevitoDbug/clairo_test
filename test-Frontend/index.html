@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClairoProof Interface</title>
+    <!-- Updated ethers.js source from unpkg CDN -->
+    <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        input, textarea { width: 100%; padding: 8px; margin-bottom: 10px; }
+        .section { margin-bottom: 30px; border: 1px solid #ccc; padding: 15px; border-radius: 5px; }
+        .result { background-color: #f0f0f0; padding: 10px; border-radius: 3px; min-height: 20px; }
+        .file-input { margin: 10px 0; }
+        .tip { background-color: #e6f7ff; padding: 10px; border-left: 4px solid #1890ff; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>ClairoProof Blockchain Interface</h1>
+    
+    <div class="section">
+        <h2>Connection Status</h2>
+        <div id="connection-status">Not connected</div>
+        <button id="connect-wallet">Connect MetaMask</button>
+    </div>
+
+    <div class="section">
+        <h2>Submit New Proof</h2>
+        
+        <p>Upload Media File (Image/Video):</p>
+        <input type="file" id="media-file" class="file-input" accept="image/*,video/*">
+        <div id="file-hash-result" class="result">File hash will appear here</div>
+        
+        <p>Metadata:</p>
+        <textarea id="metadata-text" rows="5" placeholder="Enter image metadata (camera model, timestamp, etc.)"></textarea>
+        <div id="metadata-hash-result" class="result">Metadata hash will appear here</div>
+        
+        <p>Latitude (scaled by 1e6, e.g. 40.7128° = 40712800):</p>
+        <input type="number" id="latitude" placeholder="Enter latitude">
+        
+        <p>Longitude (scaled by 1e6, e.g. -74.0060° = -74006000):</p>
+        <input type="number" id="longitude" placeholder="Enter longitude">
+        
+        <button id="generate-hashes">Generate Hashes</button>
+        <button id="submit-proof">Submit Proof to Blockchain</button>
+        <div class="result" id="submit-result"></div>
+        
+        <div class="tip">
+            <strong>Important:</strong> After submitting a proof, it may take 15-30 seconds for the transaction to be confirmed
+            on the blockchain. The last submitted hash will be automatically saved for verification.
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Verify Proof</h2>
+        <p>File Hash (Will be converted to bytes32):</p>
+        <input type="text" id="verify-hash" placeholder="Enter file hash">
+        <button id="verify-proof">Verify Proof on Blockchain</button>
+        <div class="result" id="verify-result"></div>
+        
+        <div class="tip">
+            <strong>Tip:</strong> If your proof is not found, wait a bit longer for the blockchain to confirm the transaction,
+            then try again. Make sure you're using the exact same file hash that was generated during submission.
+        </div>
+    </div>
+
+    <!-- Load environment configuration -->
+    <script src="env-config.js"></script>
+    <!-- Load application logic -->
+    <script src="app.js"></script>
+</body>
+</html>
